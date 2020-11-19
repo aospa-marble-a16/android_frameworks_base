@@ -6369,7 +6369,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     @PermissionMethod
     void enforceCallingPermission(@PermissionName String permission, String func) {
         if (checkCallingPermission(permission)
-                == PackageManager.PERMISSION_GRANTED) {
+                == PackageManager.PERMISSION_GRANTED
+           || com.android.internal.util.aospa.PixelPropsUtils.shouldBypassTaskPermission(Binder.getCallingUid())) {
             return;
         }
 
@@ -14954,7 +14955,8 @@ public class ActivityManagerService extends IActivityManager.Stub
             if (receiver == null && !explicitExportStateDefined) {
                 // sticky broadcast, no flag specified (flag isn't required)
                 flags |= Context.RECEIVER_EXPORTED;
-            } else if (requireExplicitFlagForDynamicReceivers && !explicitExportStateDefined) {
+            } else if (requireExplicitFlagForDynamicReceivers && !explicitExportStateDefined
+                    && !com.android.internal.util.aospa.PixelPropsUtils.shouldBypassBroadcastReceiverValidation(callerPackage)) {
                 throw new SecurityException(
                         callerPackage + ": One of RECEIVER_EXPORTED or "
                                 + "RECEIVER_NOT_EXPORTED should be specified when a receiver "
