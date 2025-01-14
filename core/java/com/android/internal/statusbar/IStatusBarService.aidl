@@ -236,5 +236,10 @@ interface IStatusBarService
      */
     void toggleCameraFlash();
 
+    /**
+     * Toggle recent apps.
+     */
+    void toggleRecentApps();
+
     void restartSystemUI();
 }
