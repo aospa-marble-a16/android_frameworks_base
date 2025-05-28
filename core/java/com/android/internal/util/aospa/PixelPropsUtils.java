@@ -39,7 +39,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.R;
-import com.android.internal.util.KeyProviderManager;
+import com.android.internal.util.aospa.KeyProviderManager;
 import com.android.internal.util.aospa.Utils;
 
 import java.lang.reflect.Field;
