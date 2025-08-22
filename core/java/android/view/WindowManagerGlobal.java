@@ -37,6 +37,7 @@ import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
+import android.provider.Settings;
 import android.util.AndroidRuntimeException;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -474,6 +475,14 @@ public final class WindowManagerGlobal {
                         windowlessSession, new WindowlessWindowLayout());
             }
 
+            boolean ignoreSecure = Settings.Global.getInt(
+                    view.getContext().getContentResolver(),
+                    Settings.Global.WINDOW_IGNORE_SECURE, 0) == 1;
+
+            if (ignoreSecure) {
+                wparams.flags &= ~WindowManager.LayoutParams.FLAG_SECURE;
+            }
+
             view.setLayoutParams(wparams);
 
             int visibleRootCount = 0;
@@ -509,6 +518,14 @@ public final class WindowManagerGlobal {
         }
 
         final WindowManager.LayoutParams wparams = (WindowManager.LayoutParams)params;
+
+        boolean ignoreSecure = Settings.Global.getInt(
+                view.getContext().getContentResolver(),
+                Settings.Global.WINDOW_IGNORE_SECURE, 0) == 1;
+
+        if (ignoreSecure) {
+            wparams.flags &= ~WindowManager.LayoutParams.FLAG_SECURE;
+        }
 
         view.setLayoutParams(wparams);
 
