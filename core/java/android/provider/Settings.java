@@ -12602,6 +12602,32 @@ public final class Settings {
         public static final String VBOOT_HASH = "vboot_hash";
 
         /**
+         * Per-apps device spoofing
+         * @hide
+         */
+        @Readable
+        public static final String PER_APPS_DEVICE_SPOOF = "per_apps_device_spoof";
+
+        /**
+         * Custom device spoof profiles for per-app spoofing
+         * @hide
+         */
+        @Readable
+        public static final String CUSTOM_SPOOF_PROFILES = "custom_spoof_profiles";
+
+        /** 
+         * @hide 
+         */
+        @Readable
+        public static final String PER_APPS_DEVICE_SPOOF_ENABLED = "per_apps_device_spoof_enabled";
+
+        /** 
+         * @hide 
+         */
+        @Readable
+        public static final String PER_APPS_DEVICE_SPOOF_CACHE = "per_apps_device_spoof_cache";
+
+        /**
          * Whether to turn off Private DNS {@link #PRIVATE_DNS_MODE}
          * when a VPN is connected
          * <p>
@@ -12781,7 +12807,6 @@ public final class Settings {
                 "communal_mode_trusted_networks";
 
         /**
-         * Setting to store denylisted system languages by the CEC {@code <Set Menu Language>}
          * confirmation dialog.
          *
          * @hide
