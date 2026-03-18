@@ -104,6 +104,8 @@ import android.widget.Editor;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
 
+import com.android.internal.util.aospa.HideAppListUtils;
+
 import java.io.IOException;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -3484,6 +3486,10 @@ public final class Settings {
         @UnsupportedAppUsage
         public String getStringForUser(ContentResolver cr, String name, final int userHandle) {
             final boolean isSelf = (userHandle == UserHandle.myUserId());
+            if (name.equals(Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES) 
+            && HideAppListUtils.shouldHideAppList(cr, cr.getPackageName())) {
+                return "";
+            }
             final boolean useCache = isSelf && !isInSystemServer();
             boolean needsGenerationTracker = false;
             if (useCache) {
@@ -7183,6 +7189,10 @@ public final class Settings {
          * @return the corresponding value, or null if not present
          */
         public static String getString(ContentResolver resolver, String name) {
+            if (name.equals(Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES) 
+            && HideAppListUtils.shouldHideAppList(resolver, resolver.getPackageName())) {
+                return "";
+            }
             return getStringForUser(resolver, name, resolver.getUserId());
         }
 
@@ -7190,6 +7200,10 @@ public final class Settings {
         @UnsupportedAppUsage
         public static String getStringForUser(ContentResolver resolver, String name,
                 int userHandle) {
+            if (name.equals(Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES) 
+            && HideAppListUtils.shouldHideAppList(resolver, resolver.getPackageName())) {
+                return "";
+            }
             if (MOVED_TO_GLOBAL.contains(name)) {
                 Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.Secure"
                         + " to android.provider.Settings.Global.");
@@ -20711,6 +20725,10 @@ public final class Settings {
         @RequiresPermission(Manifest.permission.READ_DEVICE_CONFIG)
         public static String getString(@NonNull String name) {
             ContentResolver resolver = getContentResolver();
+            if (name.equals(Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES) 
+            && HideAppListUtils.shouldHideAppList(resolver, resolver.getPackageName())) {
+                return "";
+            }
             return sNameValueCache.getStringForUser(resolver, name, resolver.getUserId());
         }
 
